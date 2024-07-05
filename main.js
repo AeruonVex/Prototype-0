@@ -101,7 +101,7 @@ const { mp3 } = require('./plugins/ytmp3.js')
  const isImage = (type == 'imageMessage')   
   const isCreator = global.owner.map(([numero]) => numero.replace(/[^\d\s().+:]/g, '').replace(/\s/g, '') + '@s.whatsapp.net').includes(userSender) 
   const itsMe = m.sender == conn.user.id ? true : false
-  const text = args.join(" ") 
+   
   const quoted = m.quoted ? m.quoted : m  
   const qmsg = (quoted.msg || quoted) 
   const sender = m.key.fromMe ? botnm : m.isGroup ? m.key.participant : m.key.remoteJid 

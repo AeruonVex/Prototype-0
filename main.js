@@ -1261,15 +1261,17 @@ break
   conn.sendMessage(from, {image:krt.result, caption: info.result}, {quoted:m})}  
   break  
   
-  case 'reg': {  
-  let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i  
-  let user = global.db.data.users[m.sender]  
-  if (user.registered === true) return reply(`*Ya estas registrado 🧐*`)   
-  if (!Reg.test(text)) return reply(`*❎ Incorrecto*\nUse de esta forma\nEjemplo: ${prefix}reg nombre.edad`)   
-  let [_, name, splitter, age] = text.match(Reg)  
-  if (!name) return reply('El nombre no puede estar vacio')   
-  if (!age) return reply('La edad no puede esta vaciar (Numeros)')   
-  age = parseInt(age)  
+  case 'reg': {
+  let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i;
+  let user = global.db.data.users[m.sender];
+
+  if (user.registered === true) return reply(`*Ya estás registrado 🧐*`);
+  if (!Reg.test(text)) return reply(`*❎ Incorrecto*\nUsa el formato: ${prefix}reg nombre.edad`);
+
+  let [_, name, splitter, age] = text.match(Reg);
+  if (!name) return reply('El nombre no puede estar vacío');
+  if (!age) return reply('La edad no puede estar vacía (números)');
+  age = parseInt(age); 
   if (age > 100) return reply('Que viejo (。-`ω´-)')   
   if (age < 5) return reply('🚼  Basado, los bebes saben escribir.✍️😳')   
   if (name.length >= 30) return reply('🐈 Fua que basado, el nombre es muy largo que quiere un puente como nombre😹')   

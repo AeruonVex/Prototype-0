@@ -101,7 +101,7 @@ const { mp3 } = require('./plugins/ytmp3.js')
  const isImage = (type == 'imageMessage')   
   const isCreator = global.owner.map(([numero]) => numero.replace(/[^\d\s().+:]/g, '').replace(/\s/g, '') + '@s.whatsapp.net').includes(userSender) 
   const itsMe = m.sender == conn.user.id ? true : false
-   
+  const text = args.join(" ")
   const quoted = m.quoted ? m.quoted : m  
   const qmsg = (quoted.msg || quoted) 
   const sender = m.key.fromMe ? botnm : m.isGroup ? m.key.participant : m.key.remoteJid 
@@ -1261,24 +1261,22 @@ break
   conn.sendMessage(from, {image:krt.result, caption: info.result}, {quoted:m})}  
   break  
   
-  case 'reg': {
-  let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i;
-  let user = global.db.data.users[m.sender];
-
-  if (user.registered === true) return reply(`*Ya estás registrado 🧐*`);
-  
-
-  let [_, name, splitter, age] = text.match(Reg);
-  if (!name) return reply('El nombre no puede estar vacío');
-  if (!age) return reply('La edad no puede estar vacía (números)');
-  age = parseInt(age); 
+  case 'reg': {  
+  let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i  
+  let user = global.db.data.users[m.sender]  
+  if (user.registered === true) return reply(`*Ya estas registrado 🧐*`)   
+  if (!Reg.test(text)) return reply(`*❎ Incorrecto*\nUse de esta forma\nEjemplo: ${prefix}reg nombre.edad`)   
+  let [_, name, splitter, age] = text.match(Reg)  
+  if (!name) return reply('El nombre no puede estar vacio')   
+  if (!age) return reply('La edad no puede esta vaciar (Numeros)')   
+  age = parseInt(age)  
   if (age > 100) return reply('Que viejo (。-`ω´-)')   
   if (age < 5) return reply('🚼  Basado, los bebes saben escribir.✍️😳')   
   if (name.length >= 30) return reply('🐈 Fua que basado, el nombre es muy largo que quiere un puente como nombre😹')   
   user.name = name.trim()  
   user.age = age  
   user.regTime = + new Date  
-  user.registered = true  
+  user.registered = true   
   // let sn = createHash('md5').update(m.sender).digest('hex')  
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : m.fromMe ? conn.user.jid : m.sender  
   const date = moment.tz('America/Bogota').format('DD/MM/YYYY')  

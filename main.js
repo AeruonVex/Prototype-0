@@ -1266,7 +1266,7 @@ break
   let user = global.db.data.users[m.sender];
 
   if (user.registered === true) return reply(`*Ya estás registrado 🧐*`);
-  if (!Reg.test(text)) return reply(`*❎ Incorrecto*\nUsa el formato: ${prefix}reg nombre.edad`);
+  
 
   let [_, name, splitter, age] = text.match(Reg);
   if (!name) return reply('El nombre no puede estar vacío');
